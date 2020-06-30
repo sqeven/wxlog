@@ -16,7 +16,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 	{
 		//##########################################################
 		//
-		//注意：仅适配PC微信2.6.8.65版本，其它版本不可用
+		//注意：仅适配PC微信2.8.0.121版本，其它版本不可用
 		//
 		//##########################################################
 
@@ -47,17 +47,17 @@ VOID OpenDebugString(HMODULE hModule)
 	DWORD TLogLevel = 0;
 	DWORD Xlogger_IsEnabled = 1;
 
-	DWORD TLogLevel_Address = wxBaseAddress + 0x1208280;
-	DWORD Xlogger_IsEnabled_Address = wxBaseAddress + 0x126317D;
+	DWORD TLogLevel_Address = wxBaseAddress + 0x15C2D54;
+	DWORD Xlogger_IsEnabled_Address = wxBaseAddress + 0x1612A61;
 
 	//修改内存
 	*((int*)TLogLevel_Address) = TLogLevel;
 	*((int*)Xlogger_IsEnabled_Address) = Xlogger_IsEnabled;
 
 	// inline hook
-	//6BA6E0E8 | .E8 F38B82FF   call WeChatWi.6B296CE0;  生成信息
-	//WeChatWin.dll+A5E0E8 - E8 F38B82FF           - call WeChatWin.dll+286CE0
-	DWORD hookAddress = wxBaseAddress + 0xA5E0E8;
+	//72B8C788  |.  E8 F3415DFF   call WeChatWi.72160980 ;  生成信息
+	//WeChatWin.dll+CEC788 - E8 F3415DFF           - call WeChatWin.dll+2C0980
+	DWORD hookAddress = wxBaseAddress + 0xCEC788;
 
 	//返回地址
 	jumBackAddress = hookAddress + 5;
